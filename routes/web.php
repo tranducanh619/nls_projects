@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('trangchu');
 });
+
+Route::get('/ontap', function () {
+    return view('FormOntap');
+});
