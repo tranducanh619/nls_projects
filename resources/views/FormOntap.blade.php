@@ -29,7 +29,8 @@
                     </button>
                     <div class="collapse navbar-collapse " id="ftco-nav">
                         <ul class="navbar-nav ml-auto mr-md-3">
-                            <li class="nav-item active"><a href="#" class="nav-link mx-3 text-white" >Trang chủ</a></li>
+                            <li class="nav-item active"><a href="#" class="nav-link mx-3 text-white">Trang chủ</a>
+                            </li>
                             <li class="nav-item"><a href="#" class="nav-link mx-3 text-white">Giới thiệu</a></li>
                             <li class="nav-item"><a href="#" class="nav-link mx-3 text-white">Ôn tập</a></li>
                             <li class="nav-item"><a href="#" class="nav-link mx-3 text-white">Diễn đàn</a></li>
@@ -42,215 +43,47 @@
         </div>
 
     </header>
-    <form>
-        <div class= "container mt-5">
-            <div name ="Questions">
-                <h4>Bấm vào máy tính để bàn.</h4>
-            </div>
-            <img src="../Anh/1.png" alt="Image description">
-            <div name="Answers">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
-                        value="option1">
-                    <label class="form-check-label" for="exampleRadios1">
-                        Máy tính bảng
-                    </label>
+    <div class="d-grid col-3 mx-auto mt-5 ">
+        <h1 class="fs-2">Chủ đề: sử dụng máy tính</h1>
+    </div>
+    <div class="row col-5 mx-auto ">
+        <h4 class="fw-bold text-center mt-3"></h4>
+        <form class=" bg-white " action="">
+            @for ($i = 0; $i < 5; $i++)
+                <div style="border: 1px solid black;" class= "p-3 rounded-3 mb-3">
+                    <p class="fw-bold">{{ $i+1 .'. '}}How satisfied are you with our product?</p>
+                    <div>
+                        <div>
+                            <img src="https://img.thuthuatphanmem.vn/uploads/2018/10/26/nhung-anh-dep-ve-viet-nam_055420259.jpg"
+                                class="w-100 mh-100 mb-3" alt="Responsive image">
+                        </div>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="radio" name="exampleForm" id="radioExample1" />
+                        <label class="form-check-label" for="radioExample1">
+                            Option 1
+                        </label>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="radio" name="exampleForm" id="radioExample2" />
+                        <label class="form-check-label" for="radioExample2">
+                            Option 2
+                        </label>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="radio" name="exampleForm" id="radioExample3" />
+                        <label class="form-check-label" for="radioExample3">
+                            Option 3
+                        </label>
+                    </div>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                        value="option2">
-                    <label class="form-check-label" for="exampleRadios2">
-                        Máy tính để bàn
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3"
-                        value="option3">
-                    <label class="form-check-label" for="exampleRadios3">
-                        Laptop
-                    </label>
-                </div>
-            </div>
+                
+                @endfor
+        </form>
+        <div class="d-flex justify-content-center mb-5 mt-5">
+            <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary">Submit</button>
         </div>
-        <div class= "container mt-5">
-            <div name ="Questions">
-                <h4>Bấm vào máy tính để bàn.</h4>
-            </div>
-            <img src="../Anh/1.png" alt="Image description">
-            <div name="Answers">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
-                        value="option1">
-                    <label class="form-check-label" for="exampleRadios1">
-                        Máy tính bảng
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                        value="option2">
-                    <label class="form-check-label" for="exampleRadios2">
-                        Máy tính để bàn
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3"
-                        value="option3">
-                    <label class="form-check-label" for="exampleRadios3">
-                        Laptop
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class= "container mt-5">
-            <div name ="Questions">
-                <h4>Bấm vào máy tính để bàn.</h4>
-            </div>
-            <img src="../Anh/1.png" alt="Image description">
-            <div name="Answers">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
-                        value="option1">
-                    <label class="form-check-label" for="exampleRadios1">
-                        Máy tính bảng
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                        value="option2">
-                    <label class="form-check-label" for="exampleRadios2">
-                        Máy tính để bàn
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3"
-                        value="option3">
-                    <label class="form-check-label" for="exampleRadios3">
-                        Laptop
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class= "container mt-5">
-            <div name ="Questions">
-                <h4>Bấm vào máy tính để bàn.</h4>
-            </div>
-            <img src="../Anh/1.png" alt="Image description">
-            <div name="Answers">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
-                        value="option1">
-                    <label class="form-check-label" for="exampleRadios1">
-                        Máy tính bảng
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                        value="option2">
-                    <label class="form-check-label" for="exampleRadios2">
-                        Máy tính để bàn
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3"
-                        value="option3">
-                    <label class="form-check-label" for="exampleRadios3">
-                        Laptop
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class= "container mt-5">
-            <div name ="Questions">
-                <h4>Bấm vào máy tính để bàn.</h4>
-            </div>
-            <img src="../Anh/1.png" alt="Image description">
-            <div name="Answers">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
-                        value="option1">
-                    <label class="form-check-label" for="exampleRadios1">
-                        Máy tính bảng
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                        value="option2">
-                    <label class="form-check-label" for="exampleRadios2">
-                        Máy tính để bàn
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3"
-                        value="option3">
-                    <label class="form-check-label" for="exampleRadios3">
-                        Laptop
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class= "container mt-5">
-            <div name ="Questions">
-                <h4>Bấm vào máy tính để bàn.</h4>
-            </div>
-            <img src="../Anh/1.png" alt="Image description">
-            <div name="Answers">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
-                        value="option1">
-                    <label class="form-check-label" for="exampleRadios1">
-                        Máy tính bảng
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                        value="option2">
-                    <label class="form-check-label" for="exampleRadios2">
-                        Máy tính để bàn
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3"
-                        value="option3">
-                    <label class="form-check-label" for="exampleRadios3">
-                        Laptop
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class= "container mt-5">
-            <div name ="Questions">
-                <h4>Bấm vào máy tính để bàn.</h4>
-            </div>
-            <img src="../Anh/1.png" alt="Image description">
-            <div name="Answers">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
-                        value="option1">
-                    <label class="form-check-label" for="exampleRadios1">
-                        Máy tính bảng
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                        value="option2">
-                    <label class="form-check-label" for="exampleRadios2">
-                        Máy tính để bàn
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3"
-                        value="option3">
-                    <label class="form-check-label" for="exampleRadios3">
-                        Laptop
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="d-grid gap-2 col-3 mx-auto mt-5 mb-5">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-
-    </form>
+    </div>
 
     <footer class="w3-container w3-theme-dark w3-padding-16">
         <h3>Footer</h3>
