@@ -20,3 +20,8 @@ Route::get('/', function () {
 Route::get('/ontap', function () {
     return view('FormOntap');
 });
+
+Route::get('/test-db', function () {
+    $results = DB::select('SELECT * FROM chudechinh');
+    return $results;
+});
