@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\LoginGoogleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,15 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('trangchu');
-});
 
 Route::get('/ontap', function () {
     return view('FormOntap');
 });
 
-Route::get('/test-db', function () {
-    $results = DB::select('SELECT * FROM chudechinh');
-    return $results;
+
+Route::get('/login', function () {
+    return view('login');
+});
+
+Route::get('auth/google', [LoginGoogleController::class, 'redirectToGoogle'])->name('login-by-google');
+Route::get('auth/google/callback', [LoginGoogleController::class, 'handleGoogleCallback']);
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/', function () {
+        return view('trangchu');
+    });
 });
