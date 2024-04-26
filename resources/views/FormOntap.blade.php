@@ -44,45 +44,39 @@
 
     </header>
     <div class="d-grid col-3 mx-auto mt-5 ">
-        <h1 class="fs-2">Chủ đề: sử dụng máy tính</h1>
+        <h1 class="fs-2">Chủ đề: {{ $chude->TenChuDe }}</h1>
     </div>
     <div class="row col-5 mx-auto ">
         <h4 class="fw-bold text-center mt-3"></h4>
-        <form class=" bg-white " action="">
-            @for ($i = 0; $i < 5; $i++)
-                <div style="border: 1px solid black;" class= "p-3 rounded-3 mb-3">
-                    <p class="fw-bold">{{ $i+1 .'. '}}How satisfied are you with our product?</p>
+        <form class=" bg-white " action="{{ route('thongke') }}" method="post">
+            @csrf
+            @foreach ($cauhoi as $cauHoi)
+                <div style="border: 1px solid black;" class="p-3 rounded-3 mb-3">
+                    <p class="fw-bold">{{ $cauHoi->NoiDungCauHoi }}</p>
                     <div>
                         <div>
-                            <img src="https://img.thuthuatphanmem.vn/uploads/2018/10/26/nhung-anh-dep-ve-viet-nam_055420259.jpg"
-                                class="w-100 mh-100 mb-3" alt="Responsive image">
+                            <img src="{{ $cauHoi->anhmh }}" class="w-100 mh-100 mb-3" alt="Responsive image">
                         </div>
                     </div>
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="radio" name="exampleForm" id="radioExample1" />
-                        <label class="form-check-label" for="radioExample1">
-                            Option 1
-                        </label>
-                    </div>
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="radio" name="exampleForm" id="radioExample2" />
-                        <label class="form-check-label" for="radioExample2">
-                            Option 2
-                        </label>
-                    </div>
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="radio" name="exampleForm" id="radioExample3" />
-                        <label class="form-check-label" for="radioExample3">
-                            Option 3
-                        </label>
-                    </div>
+                    <!-- Lặp qua các đáp án của câu hỏi -->
+                    @foreach ($dapan as $dapAn)
+                        @if ($dapAn->IDCauHoi == $cauHoi->IDCauHoi)
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="dap_an[{{ $cauHoi->IDCauHoi }}]"
+                                    value="{{ $dapAn->IDDapAn }}" id="radioExample{{ $dapAn->IDDapAn }}" />
+                                <label class="form-check-label" for="radioExample{{ $dapAn->IDDapAn }}">
+                                    {{ $dapAn->NoiDungDapAn }}
+                                </label>
+                            </div>
+                        @endif
+                    @endforeach
                 </div>
-                
-                @endfor
+            @endforeach
+            <div class="d-flex justify-content-center mb-5 mt-5">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
         </form>
-        <div class="d-flex justify-content-center mb-5 mt-5">
-            <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary">Submit</button>
-        </div>
+        
     </div>
 
     <footer class="w3-container w3-theme-dark w3-padding-16">
