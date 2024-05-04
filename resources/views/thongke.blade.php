@@ -11,7 +11,5 @@
     <p>Số câu trả lời đúng: {{ $soCauTraLoiDung }}</p>
     <p>Tổng số câu hỏi: {{ $tongSoCauHoi }}</p>
     <p>Phần trăm câu trả lời đúng: {{ $phanTramDung }}%</p>
-
-
 </body>
 </html>

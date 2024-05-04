@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginGoogleController;
 use App\Http\Controllers\ControllerChuDe;
 use App\Http\Controllers\ThongKeCauTraLoi;
+use App\Http\Controllers\BaiVietController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,6 +25,10 @@ Route::get('/login', function () {
     return view('login');
 });
 
+Route::get('/admin', function () {
+    return view('admin');
+});
+
 Route::get('auth/google', [LoginGoogleController::class, 'redirectToGoogle'])->name('login-by-google');
 Route::get('auth/google/callback', [LoginGoogleController::class, 'handleGoogleCallback']);
 Route::middleware([
@@ -31,5 +36,11 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/', [ControllerChuDe::class, 'ChuDeChinh']);
+    Route::get('/trangchu', [ControllerChuDe::class, 'ChuDeChinh'])->name('trangchu');
 });
+
+
+Route::get('/diendan', [BaiVietController::class, 'hienThiForm'])->name('hienthidiendan');
+Route::post('/diendan', [BaiVietController::class, 'themBaiViet'])->name('diendan');
+Route::post('/diendan/update', [BaiVietController::class, 'update'])->name('diendan.update');
+Route::get('/diendan/xoa/{id}', [BaiVietController::class, 'delete'])->name('xoa.diendan');

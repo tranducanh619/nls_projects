@@ -1,13 +1,14 @@
 <?php
-  
+
 namespace App\Http\Controllers;
-  
+
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use Exception;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-  
+use Carbon\Carbon;
+
 class LoginGoogleController extends Controller
 {
     /**
@@ -19,7 +20,7 @@ class LoginGoogleController extends Controller
     {
         return Socialite::driver('google')->redirect();
     }
-          
+
     /**
      * Create a new controller instance.
      *
@@ -28,31 +29,35 @@ class LoginGoogleController extends Controller
     public function handleGoogleCallback()
     {
         try {
-        
-            $user = Socialite::driver('google')->user();
-         
-            $finduser = User::where('google_id', $user->google_id)->first();
-         
-            if($finduser){
-         
-                Auth::login($finduser);
-        
-                return redirect()->intended('/');
-         
-            }else{
-                $newUser = User::updateOrCreate(['email' => $user->email],[
-                        'name' => $user->name,
-                        'google_id'=> $user->id,
-                        'password' => encrypt('123456dummy')
-                    ]);
-         
-                Auth::login($newUser);
-        
-                return redirect()->intended('/');
-            }
-        
-        } catch (Exception $e) {
-            dd($e->getMessage());
+            $googleUser = Socialite::driver('google')->user();
+           
+        } catch (\Exception $e) {
+            // Xử lý lỗi nếu có
+            return redirect()->route('/login')->with('error', 'Đã xảy ra lỗi khi đăng nhập bằng Google.');
         }
+    
+        // Kiểm tra nếu định dạng email hợp lệ
+        if (strpos($googleUser->email, '@hvnh.edu.vn') !== false) {
+            // Lưu thông tin người dùng vào cơ sở dữ liệu
+            $user = User::firstOrCreate(
+                ['google_id' => $googleUser->id],
+                ['name' => $googleUser->name, 'avatar' => $googleUser->avatar, 'email' => $googleUser->email]
+            );
+    
+            // Cập nhật thông tin đăng nhập đầu tiên nếu cần
+            if (!$user->created_at) {
+                $user->created_at = now();
+                $user->save();
+            }
+    
+            // Đăng nhập người dùng vào hệ thống
+            Auth::login($user);
+        } else {
+            // Nếu định dạng email không hợp lệ
+            return redirect()->route('/login')->with('error', 'Tài khoản email không hợp lệ.');
+        }
+    
+        // Chuyển hướng sau khi xử lý
+        return redirect()->route('trangchu');
     }
 }

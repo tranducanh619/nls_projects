@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/app.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
@@ -90,7 +91,7 @@
             <ul>
                 <li><a href="#">Giới thiệu</a></li>
                 <li><a href="#">Ôn tập</a></li>
-                <li><a href="#">Diễn đàn</a></li>
+                <li><a href="{{ route('diendan') }}">Diễn đàn</a></li>
                 <li><a href="#">Liên hệ</a></li>
                 <!-- <li><a href="#">TRANG CHU</a></li>
     <li><a href="#">PHAN CUNG</a></li>
@@ -131,7 +132,22 @@
 
     </header>
     </style>
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-6 mx-auto text-center">
+                <div class="rounded border border-secondary p-2">
+                    <!-- Ảnh hình tròn với padding và kích thước -->
+                    <img src="{{ $user->avatar }}" class="mx-auto w3-circle w3-padding w3-image"
+                        alt="Ảnh hình tròn với padding và kích thước">
+                    <div class="col-8 font-weight-bold mx-auto">
+                        <!-- Nội dung văn bản -->
+                        Xin chào, {{ $user->name }}
+                    </div>
+                </div>
+            </div>
 
+        </div>
+    </div>
     <!-- Modal -->
     <div class="w3-row-padding w3-center w3-margin-top" id="id0101">
         @foreach ($chuDeChinhs as $chuDeChinh)
@@ -142,7 +158,9 @@
                         src="https://img.freepik.com/premium-vector/online-exam-checklist-pencil-computer-monitor_153097-220.jpg?w=360"
                         style="width:240px; height: 200px;">
                     @foreach ($chuDeChinh->chudes as $chuDe)
-                        <a href="{{ route('ontap', ['id' => $chuDe->IDChuDe]) }}"><p>{{ $chuDe->TenChuDe }}</p></a>
+                        <a href="{{ route('ontap', ['id' => $chuDe->IDChuDe]) }}">
+                            <p>{{ $chuDe->TenChuDe }}</p>
+                        </a>
                     @endforeach
                 </div>
             </div>

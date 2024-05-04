@@ -46,37 +46,51 @@
     <div class="d-grid col-3 mx-auto mt-5 ">
         <h1 class="fs-2">Chủ đề: {{ $chude->TenChuDe }}</h1>
     </div>
-    <div class="row col-5 mx-auto ">
-        <h4 class="fw-bold text-center mt-3"></h4>
-        <form class=" bg-white " action="{{ route('thongke') }}" method="post">
-            @csrf
-            @foreach ($cauhoi as $cauHoi)
-                <div style="border: 1px solid black;" class="p-3 rounded-3 mb-3">
-                    <p class="fw-bold">{{ $cauHoi->NoiDungCauHoi }}</p>
-                    <div>
+    <div class="row">
+        <!-- Nội dung ôn tập -->
+        <div class="col-md-6 mx-auto">
+            <form class=" bg-white " action="{{ route('thongke') }}" method="post">
+                @csrf
+                @foreach ($cauhoi as $cauHoi)
+                    <div style="border: 1px solid black;" class="p-3 rounded-3 mb-3">
+                        <p class="fw-bold">{{ $cauHoi->NoiDungCauHoi }}</p>
                         <div>
-                            <img src="{{ $cauHoi->anhmh }}" class="w-100 mh-100 mb-3" alt="Responsive image">
-                        </div>
-                    </div>
-                    <!-- Lặp qua các đáp án của câu hỏi -->
-                    @foreach ($dapan as $dapAn)
-                        @if ($dapAn->IDCauHoi == $cauHoi->IDCauHoi)
-                            <div class="form-check mb-3">
-                                <input class="form-check-input" type="radio" name="dap_an[{{ $cauHoi->IDCauHoi }}]"
-                                    value="{{ $dapAn->IDDapAn }}" id="radioExample{{ $dapAn->IDDapAn }}" />
-                                <label class="form-check-label" for="radioExample{{ $dapAn->IDDapAn }}">
-                                    {{ $dapAn->NoiDungDapAn }}
-                                </label>
+                            <div>
+                                @if ($cauHoi->anhmh)
+                                    <img src="{{ asset('db_img/' . $cauHoi->IDChuDe . '/' . $cauHoi->anhmh) }}"
+                                        class="w-100 mh-100 mb-3" alt="Responsive image">
+                                @endif
+
                             </div>
-                        @endif
-                    @endforeach
+                        </div>
+                        <!-- Lặp qua các đáp án của câu hỏi -->
+                        @foreach ($dapan as $dapAn)
+                            @if ($dapAn->IDCauHoi == $cauHoi->IDCauHoi)
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio"
+                                        name="dap_an[{{ $cauHoi->IDCauHoi }}]" value="{{ $dapAn->IDDapAn }}"
+                                        id="radioExample{{ $dapAn->IDDapAn }}" />
+                                    <label class="form-check-label" for="radioExample{{ $dapAn->IDDapAn }}">
+                                        {{ $dapAn->NoiDungDapAn }}
+                                    </label>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                @endforeach
+
+                <div class="d-flex justify-content-center mb-5 mt-5">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <input type="hidden" name="IDChuDeCauHoi" value="{{ $cauHoi->IDChuDe }}">
+                    <input type="hidden" name="IDPhien" value="{{ $phienDangTonTai->IDPhien }}">
                 </div>
-            @endforeach
-            <div class="d-flex justify-content-center mb-5 mt-5">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-        </form>
-        
+            </form>
+        </div>
+        <div class="col-md-2 mx-auto">
+            @for ($i = 1; $i <= $soCauHoi; $i++)
+                <span id="cauHoi{{ $i }}" class="badge bg-light text-dark">Câu {{ $i }}</span>
+            @endfor
+        </div>
     </div>
 
     <footer class="w3-container w3-theme-dark w3-padding-16">
@@ -93,6 +107,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
+
 </body>
 
 </html>
