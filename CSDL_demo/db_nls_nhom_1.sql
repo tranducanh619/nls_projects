@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 26, 2024 lúc 02:17 PM
+-- Thời gian đã tạo: Th5 04, 2024 lúc 11:42 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -29,13 +29,28 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `baiviet` (
   `IDBaiViet` int(11) NOT NULL,
-  `IDNguoiDung` int(11) DEFAULT NULL,
-  `IDChuDe` int(11) DEFAULT NULL,
-  `TieuDe` varchar(255) NOT NULL,
-  `NoiDung` text DEFAULT NULL,
+  `IDNguoiDung` bigint(20) UNSIGNED NOT NULL,
+  `IDChuDe` int(11) NOT NULL,
+  `TieuDe` text DEFAULT NULL,
+  `NoiDung` text NOT NULL,
   `NgayDang` datetime DEFAULT current_timestamp(),
   `SoLuotLike` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `baiviet`
+--
+
+INSERT INTO `baiviet` (`IDBaiViet`, `IDNguoiDung`, `IDChuDe`, `TieuDe`, `NoiDung`, `NgayDang`, `SoLuotLike`) VALUES
+(1, 1, 9, 'demo', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', '2024-04-28 11:02:52', 0),
+(3, 1, 9, 'đang sửa', 'thử', '2024-04-28 17:21:08', 0),
+(5, 1, 12, 'khoa học', 'ádsadasdas', '2024-04-29 16:21:16', 0),
+(6, 1, 11, 'khoa học', 'sssssssssssssssss', '2024-04-29 16:23:53', 0),
+(7, 1, 10, 'khoa học', 'aaaaaaaaaaaaaaaaaaaa', '2024-04-29 16:32:56', 0),
+(8, 1, 10, 'khoa học', 'aaaaaaaaaaaaaaaaaaaaaaaa', '2024-04-29 16:34:08', 0),
+(9, 1, 10, 'khoa học', 'aksjdkasdjaskdasdhaskdj', '2024-04-29 16:34:46', 0),
+(10, 1, 8, 'demo', 'test', '2024-04-29 16:36:59', 0),
+(11, 1, 8, 'không', 'aaaaaaaaaa', '2024-04-29 16:37:31', 0);
 
 -- --------------------------------------------------------
 
@@ -138,6 +153,17 @@ CREATE TABLE `chudebaiviet` (
   `TenChuDe` varchar(255) NOT NULL,
   `MoTa` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `chudebaiviet`
+--
+
+INSERT INTO `chudebaiviet` (`IDChuDeBaiViet`, `TenChuDe`, `MoTa`) VALUES
+(8, 'khoa học', ''),
+(9, 'Ôn tập', ''),
+(10, 'Công nghệ', ''),
+(11, 'Thư viện', ''),
+(12, 'Thắc mắc', '');
 
 -- --------------------------------------------------------
 
@@ -269,7 +295,8 @@ CREATE TABLE `ketqua` (
 CREATE TABLE `likes` (
   `IDLike` int(11) NOT NULL,
   `IDBaiViet` int(11) DEFAULT NULL,
-  `IDNguoiDung` int(11) DEFAULT NULL
+  `IDNguoiDung` int(11) DEFAULT NULL,
+  `IDBinhLuan` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -376,7 +403,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('YFzBTVVOJrced9jwnJR9XZtymfEKaAnClxrLjPbe', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoieDNhVDN1dHJJdFBad1h2S1lrSnNaVE11aHNER0czaUsxTDU2UFdxTiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjk6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9vbnRhcC0zIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6MjI4OiJleUpwZGlJNklsRjZiMlk1UlZSaWFXeDBVbkJoTTNkWFNrbEhTMmM5UFNJc0luWmhiSFZsSWpvaWJFa3lSRFY0VUhNNU16QnhTbVpqV1ZaamVYSXhSRkpuVFhKbVkyMDRaMlYzVlcxcVRERTNVSEY1UVQwaUxDSnRZV01pT2lKak1UUmpOakF6TjJWaE5qZG1aRFkyWkRBM1pEVmxOVFk1WTJJeVl6Rm1ZemN6Tm1GaE56Tm1ZVEEyT1RCbVlURXdZVFptWkRFNE1HRmpOemN3TWpneElpd2lkR0ZuSWpvaUluMD0iO30=', 1714133634);
+('IG3EgSivamlOGhgObUkd9igiWi9O8imvkuTMOcu5', 12, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiQUUxYTVJWGE4WG9BcnR4M3daSHhmcFA5UkE2dmpqRXJYc0VueHlCMiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hdXRoL2dvb2dsZSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjEyO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7TjtzOjU6InN0YXRlIjtzOjQwOiJEeDBGbERVdjJBbWs4QWZ0NGtHWndrbWNLaFdJV0JMZlpxdlE1NjhHIjt9', 1714752844),
+('pUE69echROgHer2R530EVcFZeW2NU64lgt3CtjG1', 12, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0', 'YTo1OntzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czozNDc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hdXRoL2dvb2dsZS9jYWxsYmFjaz9hdXRodXNlcj0xJmNvZGU9NCUyRjBBZExJcllkaVZnaUZnOFNHdFVhS3VRVjV6VDFzdE50OG5jVG9TS2dJZnVvcE9qd1lqeTJRdkZ3RHdTRTRlUzliZXUxOHl3JnByb21wdD1jb25zZW50JnNjb3BlPWVtYWlsJTIwcHJvZmlsZSUyMG9wZW5pZCUyMGh0dHBzJTNBJTJGJTJGd3d3Lmdvb2dsZWFwaXMuY29tJTJGYXV0aCUyRnVzZXJpbmZvLnByb2ZpbGUlMjBodHRwcyUzQSUyRiUyRnd3dy5nb29nbGVhcGlzLmNvbSUyRmF1dGglMkZ1c2VyaW5mby5lbWFpbCZzdGF0ZT1zZ1NaSnFaS2Y3ekc3Vld0S2YyVkFaOTB3UUxjNjFqdXR6M1MyaHp6Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo2OiJfdG9rZW4iO3M6NDA6InpoNkpUTkkwNDJicUpKaUtnNXVIWEo3bFJwZk9hbzlQRGt0U2hCUDIiO3M6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjEyO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7Tjt9', 1714630572);
 
 -- --------------------------------------------------------
 
@@ -406,13 +434,13 @@ CREATE TABLE `users` (
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(2048) NOT NULL,
+  `password` varchar(2048) DEFAULT NULL,
   `two_factor_secret` text DEFAULT NULL,
   `two_factor_recovery_codes` text DEFAULT NULL,
   `two_factor_confirmed_at` timestamp NULL DEFAULT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
   `current_team_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `profile_photo_path` varchar(2048) DEFAULT NULL,
+  `avatar` varchar(2048) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `google_id` varchar(2048) DEFAULT NULL
@@ -422,9 +450,10 @@ CREATE TABLE `users` (
 -- Đang đổ dữ liệu cho bảng `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`, `remember_token`, `current_team_id`, `profile_photo_path`, `created_at`, `updated_at`, `google_id`) VALUES
-(1, 'Đức Anh _ K23HTTTB Trần', 'tranducanh619@gmail.com', NULL, 'eyJpdiI6IlF6b2Y5RVRiaWx0UnBhM3dXSklHS2c9PSIsInZhbHVlIjoibEkyRDV4UHM5MzBxSmZjWVZjeXIxRFJnTXJmY204Z2V3VW1qTDE3UHF5QT0iLCJtYWMiOiJjMTRjNjAzN2VhNjdmZDY2ZDA3ZDVlNTY5Y2IyYzFmYzczNmFhNzNmYTA2OTBmYTEwYTZmZDE4MGFjNzcwMjgxIiwidGFnIjoiIn0=', NULL, NULL, NULL, NULL, NULL, NULL, '2024-04-12 01:08:26', '2024-04-26 00:51:31', '108468412934413434472'),
-(2, 'ducanh tran', 'tranducanh617@gmail.com', NULL, 'eyJpdiI6IkQ1QXRENGJhU0h2ZEhVWldtTEloTGc9PSIsInZhbHVlIjoic2VlRFVONk1oUHlQMXRvbitsbENYeFBRV0dRRnV6dll1QkRpWU9LcVl1dz0iLCJtYWMiOiJmZjBhZWE5MDI0NGQ0MGZhNWIzNDY1NjFkNTNjYTM1MWM0MjA4MzQzYjA0YjNhYzE0YzRjMGYwNTA3N2RlZDNiIiwidGFnIjoiIn0=', NULL, NULL, NULL, NULL, NULL, NULL, '2024-04-12 01:25:56', '2024-04-12 01:28:17', '117846530714050588624');
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`, `remember_token`, `current_team_id`, `avatar`, `created_at`, `updated_at`, `google_id`) VALUES
+(1, 'Đức Anh _ K23HTTTB Trần', 'tranducanh619@gmail.com', NULL, 'eyJpdiI6IkxKcmVxeWRkWkZ2UmM1TE5YTjdTMmc9PSIsInZhbHVlIjoiWXZ4YkFxeUVUbGFHZ0J1dGx4MzVBZU5Rd2wvSDNCUHNZYUxVbHFPQnlQTT0iLCJtYWMiOiJiMmY5ZTU5NzQyNTM5NmJhOTdlZWYwOWExM2VkNGY4YTdmODFhZTJmOWI1ZThhMTgzYWJiMmM5ZDNhNjczNDBiIiwidGFnIjoiIn0=', NULL, NULL, NULL, NULL, NULL, '', '2024-04-12 01:08:26', '2024-04-30 01:03:05', '108468412934413434472'),
+(8, 'ducanh tran', 'tranducanh617@gmail.com', NULL, '$2y$10$m1emYM7ycgBGPC7Apq4TJ.aJ1dbmHKQ6LqwkHM7R3P.xAQonqUnO2', NULL, NULL, NULL, NULL, NULL, '', '2024-04-30 01:49:12', '2024-04-30 01:49:12', '117846530714050588624'),
+(12, 'Tran Duc Anh', '23a4040009@hvnh.edu.vn', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'https://lh3.googleusercontent.com/a/ACg8ocKma4o5YKtuPK1y0NTL01blESefs6yMJ7GKoawu0N5hoekf-Q=s96-c', '2024-05-01 20:08:23', '2024-05-01 20:08:23', '104419043618398015507');
 
 -- --------------------------------------------------------
 
@@ -458,8 +487,8 @@ CREATE TABLE `vaitronguodung` (
 --
 ALTER TABLE `baiviet`
   ADD PRIMARY KEY (`IDBaiViet`),
-  ADD KEY `IDNguoiDung` (`IDNguoiDung`),
-  ADD KEY `IDChuDe` (`IDChuDe`);
+  ADD KEY `IDChuDe` (`IDChuDe`),
+  ADD KEY `IDNguoiDung` (`IDNguoiDung`);
 
 --
 -- Chỉ mục cho bảng `binhluan`
@@ -538,7 +567,8 @@ ALTER TABLE `ketqua`
 ALTER TABLE `likes`
   ADD PRIMARY KEY (`IDLike`),
   ADD KEY `IDBaiViet` (`IDBaiViet`),
-  ADD KEY `IDNguoiDung` (`IDNguoiDung`);
+  ADD KEY `IDNguoiDung` (`IDNguoiDung`),
+  ADD KEY `IDBinhLuan` (`IDBinhLuan`);
 
 --
 -- Chỉ mục cho bảng `migrations`
@@ -616,7 +646,7 @@ ALTER TABLE `vaitronguodung`
 -- AUTO_INCREMENT cho bảng `baiviet`
 --
 ALTER TABLE `baiviet`
-  MODIFY `IDBaiViet` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IDBaiViet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT cho bảng `binhluan`
@@ -646,7 +676,7 @@ ALTER TABLE `chude`
 -- AUTO_INCREMENT cho bảng `chudebaiviet`
 --
 ALTER TABLE `chudebaiviet`
-  MODIFY `IDChuDeBaiViet` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IDChuDeBaiViet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT cho bảng `chudechinh`
@@ -718,7 +748,7 @@ ALTER TABLE `thongbao`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT cho bảng `vaitro`
@@ -734,8 +764,7 @@ ALTER TABLE `vaitro`
 -- Các ràng buộc cho bảng `baiviet`
 --
 ALTER TABLE `baiviet`
-  ADD CONSTRAINT `baiviet_ibfk_1` FOREIGN KEY (`IDNguoiDung`) REFERENCES `nguoidung` (`IDNguoiDung`),
-  ADD CONSTRAINT `baiviet_ibfk_2` FOREIGN KEY (`IDChuDe`) REFERENCES `chudebaiviet` (`IDChuDeBaiViet`);
+  ADD CONSTRAINT `baiviet_ibfk_1` FOREIGN KEY (`IDNguoiDung`) REFERENCES `users` (`id`);
 
 --
 -- Các ràng buộc cho bảng `binhluan`
@@ -787,7 +816,8 @@ ALTER TABLE `ketqua`
 --
 ALTER TABLE `likes`
   ADD CONSTRAINT `likes_ibfk_1` FOREIGN KEY (`IDBaiViet`) REFERENCES `baiviet` (`IDBaiViet`),
-  ADD CONSTRAINT `likes_ibfk_2` FOREIGN KEY (`IDNguoiDung`) REFERENCES `nguoidung` (`IDNguoiDung`);
+  ADD CONSTRAINT `likes_ibfk_2` FOREIGN KEY (`IDNguoiDung`) REFERENCES `nguoidung` (`IDNguoiDung`),
+  ADD CONSTRAINT `likes_ibfk_3` FOREIGN KEY (`IDBinhLuan`) REFERENCES `binhluan` (`IDBinhLuan`);
 
 --
 -- Các ràng buộc cho bảng `phien`
