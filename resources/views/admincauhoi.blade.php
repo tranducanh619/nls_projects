@@ -87,6 +87,11 @@
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Danh sách câu hỏi</h1>
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     <div class="row">
                         <table class="table">
                             <thead>
@@ -117,8 +122,10 @@
                                             </ul>
                                         </td>
                                         <td>
-                                            <form action="{{ route('edit.cauhoihienthi',['id' => $cauHoi->IDCauHoi]) }}" method="GET">
-                                                <input type="hidden" name="IDCauHoi" id="IDCauhoi" value="{{ $cauHoi->IDCauHoi }}">
+                                            <form action="{{ route('edit.cauhoihienthi', ['id' => $cauHoi->IDCauHoi]) }}"
+                                                method="GET">
+                                                <input type="hidden" name="IDCauHoi" id="IDCauhoi"
+                                                    value="{{ $cauHoi->IDCauHoi }}">
                                                 <button type="submit" class="btn btn-primary editBtn">
                                                     Sửa
                                                 </button>

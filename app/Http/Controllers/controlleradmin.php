@@ -80,7 +80,7 @@ class controlleradmin extends Controller
         }
 
 
-        return redirect()->back()->with('success', 'Cập nhật câu hỏi và đáp án thành công.');
+        return redirect()->route('admincauhoi',['id' => $cauHoi->IDChuDe])->with('success', 'Cập nhật câu hỏi và đáp án thành công.');
     }
 
     public function updateCauHoi(Request $request)
