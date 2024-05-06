@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginGoogleController;
 use App\Http\Controllers\ControllerChuDe;
 use App\Http\Controllers\ThongKeCauTraLoi;
 use App\Http\Controllers\BaiVietController;
+use App\Http\Controllers\controlleradmin;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,12 +22,15 @@ Route::get('ontap-{id}', [ControllerChuDe::class, 'ontap'])->name('ontap'); // S
 
 Route::post('/thongke', [ThongKeCauTraLoi::class, 'submit'])->name('thongke');
 
+Route::get('/admin', [controlleradmin::class, 'Hienthichude'])->name('admin');
+Route::get('admincauhoi/cauhoi/{id}', [controlleradmin::class, 'showQuestions'])->name('admincauhoi');
+
+Route::get('/edit_cauhoi/{id}', [controlleradmin::class, 'edit'])->name('edit.cauhoihienthi');
+Route::post('/update_cauhoi', [controlleradmin::class, 'update'])->name('updatecauhoi');
+
+
 Route::get('/login', function () {
     return view('login');
-});
-
-Route::get('/admin', function () {
-    return view('admin');
 });
 
 Route::get('auth/google', [LoginGoogleController::class, 'redirectToGoogle'])->name('login-by-google');

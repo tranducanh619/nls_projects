@@ -8,12 +8,7 @@
     <meta name="author" content="" />
     <title></title>
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../css/app.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 
 <body class="sb-nav-fixed">
@@ -82,27 +77,64 @@
                 </div>
             </nav>
         </div>
+        <style>
+            .max-img-size {
+                max-width: 500px;
+                max-height: 500px;
+            }
+        </style>
         <div id="layoutSidenav_content">
             <main>
+                <div class="container-fluid px-4">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Sửa câu hỏi và đáp án</h5>
+                        <a href="{{ route('admincauhoi', ['id' => $cauHoi->IDChuDe]) }}">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </a>
 
-                <h1 class="mt-4">Danh sách Chủ Đề</h1>
-                <div class="w3-row-padding w3-center w3-margin-top" id="id0101">
-                    @foreach ($chuDeChinhs as $chuDeChinh)
-                        <div class="w3-third">
-                            <div class="w3-card w3-container" style="min-height:460px">
-                                <h3>{{ $chuDeChinh->TenChuDe }}</h3><br>
-                                <img class="mx-auto"
-                                    src="https://img.freepik.com/premium-vector/online-exam-checklist-pencil-computer-monitor_153097-220.jpg?w=360"
-                                    style="width:240px; height: 200px;">
-                                @foreach ($chuDeChinh->chudes as $chuDe)
-                                    <a href="{{ route('admincauhoi', ['id' => $chuDe->IDChuDe]) }}">
-                                        <p>{{ $chuDe->TenChuDe }}</p>
-                                    </a>
-                                @endforeach
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('updatecauhoi') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <input type="hidden" name="IDCauHoi" value="{{ $cauHoi->IDCauHoi }}">
+                            <!-- Thêm các trường để cập nhật thông tin của câu hỏi và đáp án -->
+                            <div class="form-group">
+                                <label for="noidung">Nội dung câu hỏi:</label>
+                                <input type="text" class="form-control" id="noidung" name="NoiDungCauHoi"
+                                    value="{{ $cauHoi->NoiDungCauHoi }}">
                             </div>
-                        </div>
-                    @endforeach
+                            <!-- Thêm các trường để cập nhật thông tin của các đáp án -->
+                            <!-- Ví dụ: -->
+                            @foreach ($dapAn as $dapAnItem)
+                                <div class="mb-3 form-check">
+                                    <label class="form-check-label" for="IDDapAnDung_{{ $dapAnItem->IDDapAn }}">
+                                        {{ $dapAnItem->IDDapAn }}
+                                    </label>
+                                    <input type="checkbox" class="form-check-input"
+                                        id="IDDapAnDung_{{ $dapAnItem->IDDapAn }}" name="LaDapAnDung[{{ $dapAnItem->IDDapAn }}]"
+                                        value="{{ $dapAnItem->IDDapAn }}"
+                                        {{ $dapAnItem->LaDapAnDung ? 'checked' : '' }}>
+                                    <input type="text" class="form-control" id="answer_{{ $dapAnItem->IDDapAn }}"
+                                        name="dapAns[{{ $dapAnItem->IDDapAn }}]"
+                                        value="{{ $dapAnItem->NoiDungDapAn }}">
+                                </div>
+                            @endforeach
 
+                            @if ($cauHoi->anhmh)
+                                <label class="form-check-label" for="IDCauHoi_{{ $cauHoi->IDCauHoi }}">
+                                    Ảnh minh họa
+                                </label><br>
+                                <img src="{{ asset('db_img/' . $cauHoi->IDChuDe . '/' . $cauHoi->anhmh) }}"
+                                    class="img-fluid max-img-size" alt="Ảnh đáp án">
+                            @endif
+                            <!-- Input cho việc tải lên ảnh mới -->
+                            <input type="file" class="form-control-file" id="anhmh" name="anhmh">
+                            <!-- Thêm các trường cho các đáp án khác -->
+                            <button type="submit" class="btn btn-primary">Cập nhật</button>
+                        </form>
+                    </div>
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">
@@ -119,6 +151,12 @@
             </footer>
         </div>
     </div>
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+    <!-- Button trigger modal -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>
     <script src="js/scripts.js"></script>
@@ -128,6 +166,7 @@
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
     <script src="js/datatables-simple-demo.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

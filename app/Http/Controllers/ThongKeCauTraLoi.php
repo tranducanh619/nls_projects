@@ -63,7 +63,7 @@ class ThongKeCauTraLoi extends Controller
             'diem' => $diem,
         ]);
     }
-
+    
     // Trong trường hợp không có dữ liệu từ request, xử lý tương ứng (ví dụ: hiển thị thông báo lỗi)
     return redirect()->back()->with('error', 'Không có dữ liệu được gửi từ form.');
 }

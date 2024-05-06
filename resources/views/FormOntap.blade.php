@@ -22,7 +22,8 @@
         <div class="container">
             <nav class="navbar navbar-expand-lg ftco_navbar ftco-navbar-light bg-dark p-3" id="ftco-navbar">
                 <div class="container">
-                    <a class="navbar-brand font-monospace fw-bold fs-3 text-info" href="/">NangLucSo</a>
+                    <a class="navbar-brand font-monospace fw-bold fs-3 text-info"
+                        href="{{ route('trangchu') }}">NangLucSo</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
                         aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="fa fa-bars"></span> Menu
@@ -43,8 +44,8 @@
         </div>
 
     </header>
-    <div class="d-grid col-3 mx-auto mt-5 ">
-        <h1 class="fs-2">Chủ đề: {{ $chude->TenChuDe }}</h1>
+    <div class="d-grid mt-5 ">
+        <h1 class="fs-2 mx-auto">Chủ đề: {{ $chude->TenChuDe }}</h1>
     </div>
     <div class="row">
         <!-- Nội dung ôn tập -->
@@ -86,11 +87,12 @@
                 </div>
             </form>
         </div>
-        <div class="col-md-2 mx-auto">
+        <div class="col-md-2 mx-auto position-fixed top-50 start-0 translate-middle-y">
             @for ($i = 1; $i <= $soCauHoi; $i++)
-                <span id="cauHoi{{ $i }}" class="badge bg-light text-dark">Câu {{ $i }}</span>
+                <span id="cauHoi{{ $i }}" class="badge bg-light text-dark" onclick="scrollToCauHoi({{ $i }})">Câu {{ $i }}</span>
             @endfor
         </div>
+
     </div>
 
     <footer class="w3-container w3-theme-dark w3-padding-16">
@@ -106,6 +108,30 @@
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Lắng nghe sự kiện khi người dùng click vào một đáp án
+            $('input[type="radio"]').on('change', function() {
+                // Lấy ID của câu hỏi từ thuộc tính name của input radio
+                var cauHoiID = $(this).attr('name').match(/\d+/)[0];
+                // Thêm class "bg-success" (màu xanh) vào span có ID tương ứng với câu hỏi được chọn
+                $('#cauHoi' + cauHoiID).removeClass('bg-light text-dark').addClass('bg-success');
+            });
+        });
+    </script>
+
+    <script>
+        function scrollToCauHoi(cauHoiID) {
+            // Lấy vị trí của câu hỏi theo ID
+            var cauHoiPosition = $('#cauHoi' + cauHoiID)[0].getBoundingClientRect().top;
+
+            // Cuộn trang đến vị trí của câu hỏi
+            $('html, body').animate({
+                scrollTop: $(window).scrollTop() + cauHoiPosition
+            }, 'slow');
+        }
     </script>
 
 </body>

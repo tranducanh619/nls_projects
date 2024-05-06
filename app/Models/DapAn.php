@@ -10,8 +10,10 @@ class DapAn extends Model
     use HasFactory;
     protected $table = 'dapan'; // Tên bảng
     protected $primaryKey = 'IDDapAn';
-
-
+    public $timestamps = false;
+    protected $fillable = [
+        'IDCauHoi', 'NoiDungDapAn', 'LaDapAnDung'
+    ];
     public function cauHoi()
     {
         return $this->belongsTo(CauHoi::class, 'IDCauHoi');

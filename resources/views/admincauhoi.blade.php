@@ -8,12 +8,7 @@
     <meta name="author" content="" />
     <title></title>
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../css/app.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 
 <body class="sb-nav-fixed">
@@ -82,27 +77,63 @@
                 </div>
             </nav>
         </div>
+        <style>
+            .max-img-size {
+                max-width: 500px;
+                max-height: 500px;
+            }
+        </style>
         <div id="layoutSidenav_content">
             <main>
-
-                <h1 class="mt-4">Danh sách Chủ Đề</h1>
-                <div class="w3-row-padding w3-center w3-margin-top" id="id0101">
-                    @foreach ($chuDeChinhs as $chuDeChinh)
-                        <div class="w3-third">
-                            <div class="w3-card w3-container" style="min-height:460px">
-                                <h3>{{ $chuDeChinh->TenChuDe }}</h3><br>
-                                <img class="mx-auto"
-                                    src="https://img.freepik.com/premium-vector/online-exam-checklist-pencil-computer-monitor_153097-220.jpg?w=360"
-                                    style="width:240px; height: 200px;">
-                                @foreach ($chuDeChinh->chudes as $chuDe)
-                                    <a href="{{ route('admincauhoi', ['id' => $chuDe->IDChuDe]) }}">
-                                        <p>{{ $chuDe->TenChuDe }}</p>
-                                    </a>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Danh sách câu hỏi</h1>
+                    <div class="row">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Câu hỏi</th>
+                                    <th scope="col">Hình ảnh</th>
+                                    <th scope="col">Đáp án</th>
+                                    <th scope="col">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($cauhoi as $cauHoi)
+                                    <tr>
+                                        <td>{{ $cauHoi->NoiDungCauHoi }}</td>
+                                        <td>
+                                            @if ($cauHoi->anhmh)
+                                                <img src="{{ asset('db_img/' . $cauHoi->IDChuDe . '/' . $cauHoi->anhmh) }}"
+                                                    class="img-fluid max-img-size" alt="Hình ảnh câu hỏi">
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <ul>
+                                                @foreach ($dapan as $dapAn)
+                                                    @if ($dapAn->IDCauHoi == $cauHoi->IDCauHoi)
+                                                        <li>{{ $dapAn->NoiDungDapAn }}</li>
+                                                    @endif
+                                                @endforeach
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <form action="{{ route('edit.cauhoihienthi',['id' => $cauHoi->IDCauHoi]) }}" method="GET">
+                                                <input type="hidden" name="IDCauHoi" id="IDCauhoi" value="{{ $cauHoi->IDCauHoi }}">
+                                                <button type="submit" class="btn btn-primary editBtn">
+                                                    Sửa
+                                                </button>
+                                            </form>
+                                            <button type="button" class="btn btn-danger"
+                                                onclick="confirmDelete('{{ $cauHoi->IDCauHoi }}')">
+                                                Xóa
+                                            </button>
+                                        </td>
+                                    </tr>
                                 @endforeach
-                            </div>
-                        </div>
-                    @endforeach
+                            </tbody>
+                        </table>
 
+                    </div>
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">
@@ -119,6 +150,24 @@
             </footer>
         </div>
     </div>
+
+    <script>
+        // Lắng nghe sự kiện click trên các nút "Sửa"
+        document.addEventListener('DOMContentLoaded', function() {
+            var editButtons = document.querySelectorAll('.editBtn');
+            editButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    // Lấy giá trị IDCauHoi từ thuộc tính data-idcauhoi của nút "Sửa" tương ứng
+                    var idCauHoi = button.getAttribute('data-idcauhoi');
+                    // Cập nhật giá trị của thẻ input hidden thành giá trị IDCauHoi tương ứng
+                    document.getElementById('IDCauhoi').value = idCauHoi;
+                });
+            });
+        });
+    </script>
+
+
+    <!-- Button trigger modal -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>
     <script src="js/scripts.js"></script>
@@ -128,6 +177,7 @@
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
     <script src="js/datatables-simple-demo.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>
