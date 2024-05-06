@@ -27,7 +27,7 @@ Route::get('admincauhoi/cauhoi/{id}', [controlleradmin::class, 'showQuestions'])
 
 Route::get('/edit_cauhoi/{id}', [controlleradmin::class, 'edit'])->name('edit.cauhoihienthi');
 Route::post('/update_cauhoi', [controlleradmin::class, 'update'])->name('updatecauhoi');
-
+Route::get('/delete_cauhoi/{id}', [controlleradmin::class, 'delete'])->name('delete.cauhoi');
 
 Route::get('/login', function () {
     return view('login');
@@ -48,3 +48,4 @@ Route::get('/diendan', [BaiVietController::class, 'hienThiForm'])->name('hienthi
 Route::post('/diendan', [BaiVietController::class, 'themBaiViet'])->name('diendan');
 Route::post('/diendan/update', [BaiVietController::class, 'update'])->name('diendan.update');
 Route::get('/diendan/xoa/{id}', [BaiVietController::class, 'delete'])->name('xoa.diendan');
+

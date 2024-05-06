@@ -130,10 +130,13 @@
                                                     Sửa
                                                 </button>
                                             </form>
-                                            <button type="button" class="btn btn-danger"
-                                                onclick="confirmDelete('{{ $cauHoi->IDCauHoi }}')">
-                                                Xóa
-                                            </button>
+                                            
+                                                <!-- Form để chứa nút xóa -->
+                                                <a href="{{ route('delete.cauhoi', ['id' => $cauHoi->IDCauHoi]) }}" onclick="return confirmDelete(event)">
+                                                    <button type="button" class="btn btn-danger mt-1">Xóa</button>
+                                                </a>
+                                                    
+                                                                                     
                                         </td>
                                     </tr>
                                 @endforeach
@@ -173,6 +176,13 @@
         });
     </script>
 
+<script>
+    function confirmDelete(event) {
+        if (!confirm("Bạn có chắc chắn muốn xóa câu hỏi này không?")) {
+            event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
+        }
+    }
+</script>
 
     <!-- Button trigger modal -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
