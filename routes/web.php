@@ -29,9 +29,12 @@ Route::get('/edit_cauhoi/{id}', [controlleradmin::class, 'edit'])->name('edit.ca
 Route::post('/update_cauhoi', [controlleradmin::class, 'update'])->name('updatecauhoi');
 Route::get('/delete_cauhoi/{id}', [controlleradmin::class, 'delete'])->name('delete.cauhoi');
 
+
+Route::get('/admin/danhsachnguoidung', [controlleradmin::class, 'hienThiDanhSachNguoiDung'])->name('hienthi.nguoidung');
+
 Route::get('/login', function () {
     return view('login');
-});
+})->name('login');
 
 Route::get('auth/google', [LoginGoogleController::class, 'redirectToGoogle'])->name('login-by-google');
 Route::get('auth/google/callback', [LoginGoogleController::class, 'handleGoogleCallback']);
@@ -48,4 +51,8 @@ Route::get('/diendan', [BaiVietController::class, 'hienThiForm'])->name('hienthi
 Route::post('/diendan', [BaiVietController::class, 'themBaiViet'])->name('diendan');
 Route::post('/diendan/update', [BaiVietController::class, 'update'])->name('diendan.update');
 Route::get('/diendan/xoa/{id}', [BaiVietController::class, 'delete'])->name('xoa.diendan');
+
+Route::get('/diendan000', function () {
+    return view('diendan000');
+})->name('diendan000');
 

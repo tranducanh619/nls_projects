@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\BaiViet;
 use App\Models\ChuDeBaiViet; // Import model BaiViet
-
+use Illuminate\Support\Facades\Auth;
 class BaiVietController extends Controller
 {
     //
@@ -39,15 +39,16 @@ class BaiVietController extends Controller
         $chude = ChuDeBaiViet::all(); // Lấy danh sách các chủ đề
         // Lấy danh sách bài viết với tên chủ đề
         $baiViet = BaiViet::all();
-        
-        return view('diendan', ['chude' => $chude, 'baiviet'=>$baiViet]);
+
+        $nguoiDung = Auth::user();
+        return view('diendan', ['chude' => $chude, 'baiviet'=>$baiViet, 'nguoidung' => $nguoiDung]);
     }
 
     public function update(Request $request)
     {
         
         // Validate dữ liệu được gửi từ form
-        $validatedData = $request->validate([
+        $request->validate([
             'IBBaiViet' => 'required',
             'IDChuDe' => 'required',
             'tieude' => 'required',

@@ -8,7 +8,11 @@
                     <div class="card-body p-5 text-center">
 
                         <h3 class="mb-5">Sign in</h3>
-
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
                         <div data-mdb-input-init class="form-outline mb-4">
                             <input type="email" id="typeEmailX-2" class="form-control form-control-lg" />
                             <label class="form-label" for="typeEmailX-2">Email</label>
@@ -29,9 +33,10 @@
                             type="submit">Login</button>
 
                         <hr class="my-4">
-                        <a href="{{ route('login-by-google') }}"><button data-mdb-button-init data-mdb-ripple-init class="btn btn-lg btn-block btn-primary"
-                            style="background-color: #dd4b39;" type="submit"><i class="fab fa-google me-2"></i> Sign in
-                            with google</button></a>
+                        <a href="{{ route('login-by-google') }}"><button data-mdb-button-init data-mdb-ripple-init
+                                class="btn btn-lg btn-block btn-primary" style="background-color: #dd4b39;"
+                                type="submit"><i class="fab fa-google me-2"></i> Sign in
+                                with google</button></a>
                     </div>
                 </div>
             </div>

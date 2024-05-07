@@ -7,7 +7,7 @@ use App\Models\ChuDe;
 use App\Models\CauHoi;
 use App\Models\DapAn;
 use App\Models\ChuDeChinh;
-
+use App\Models\User;
 class controlleradmin extends Controller
 {
     //
@@ -132,4 +132,13 @@ class controlleradmin extends Controller
         // Chuyển hướng hoặc trả về JSON tùy thuộc vào yêu cầu của bạn
         return redirect()->back()->with('success', 'Xóa câu hỏi thành công');
     }
+
+    public function hienThiDanhSachNguoiDung()
+{
+    // Lấy danh sách người dùng từ bảng người dùng
+    $nguoiDungs = User::all();
+    
+    // Trả về view với dữ liệu người dùng
+    return view('danhsachnguoidung', ['nguoiDungs' => $nguoiDungs]);
+}
 }

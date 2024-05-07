@@ -84,25 +84,29 @@
         </div>
         <div id="layoutSidenav_content">
             <main>
-
-                <h1 class="mt-4">Danh sách Chủ Đề</h1>
-                <div class="w3-row-padding w3-center w3-margin-top" id="id0101">
-                    @foreach ($chuDeChinhs as $chuDeChinh)
-                        <div class="w3-third">
-                            <div class="w3-card w3-container" style="min-height:460px">
-                                <h3>{{ $chuDeChinh->TenChuDe }}</h3><br>
-                                <img class="mx-auto"
-                                    src="https://img.freepik.com/premium-vector/online-exam-checklist-pencil-computer-monitor_153097-220.jpg?w=360"
-                                    style="width:240px; height: 200px;">
-                                @foreach ($chuDeChinh->chudes as $chuDe)
-                                    <a href="{{ route('admincauhoi', ['id' => $chuDe->IDChuDe]) }}">
-                                        <p>{{ $chuDe->TenChuDe }}</p>
-                                    </a>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endforeach
-
+                <div class="container">
+                    <h1 class="text-center my-4">Danh sách người dùng</h1>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($nguoiDungs as $nguoiDung)
+                                <tr>
+                                    <th scope="row">{{ $nguoiDung->id }}</th>
+                                    <td>{{ $nguoiDung->name }}</td>
+                                    <td>{{ $nguoiDung->email }}</td>
+                                    <td><img src="{{ $nguoiDung->avatar }}" alt="Avatar" class="img-thumbnail"
+                                            style="max-width: 50px;"></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">
