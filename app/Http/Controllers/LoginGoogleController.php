@@ -35,13 +35,8 @@ class LoginGoogleController extends Controller
             return redirect()->route('login')->with('error', 'Đã xảy ra lỗi khi đăng nhập bằng Google.');
         }
 
-        $user = User::where('google_id', $googleUser->id)->first();
+        $userr = User::where('google_id', $googleUser->id)->first();
         // Kiểm tra role của người dùng
-        if ($user->role == 'admin') {
-            // Đăng nhập người dùng vào trang admin
-            Auth::login($user);
-            return redirect()->route('admin');
-        }
         if (strpos($googleUser->email, '@hvnh.edu.vn') !== false) {
             // Lưu thông tin người dùng vào cơ sở dữ liệu
             $user = User::firstOrCreate(
@@ -52,6 +47,11 @@ class LoginGoogleController extends Controller
             if (!$user->created_at) {
                 $user->created_at = now();
                 $user->save();
+            }
+            if ($userr->role == 'admin') {
+                // Đăng nhập người dùng vào trang admin
+                Auth::login($user);
+                return redirect()->route('admin');
             }
         } else {
             // Nếu định dạng email không hợp lệ
