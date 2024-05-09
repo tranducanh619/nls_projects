@@ -13,11 +13,17 @@ class KetQua extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'IDPhien', 'Diem' // Add 'IDNguoiDung' to the fillable attributes
+        'IDKetQua','IDPhien', 'Diem' // Add 'IDNguoiDung' to the fillable attributes
     ];
 
     public function phien()
     {
         return $this->belongsTo(Phien::class, 'IDPhien');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'IDNguoiDung');
+    }
+
 }

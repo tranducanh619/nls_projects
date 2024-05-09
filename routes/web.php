@@ -29,6 +29,8 @@ Route::get('/edit_cauhoi/{id}', [controlleradmin::class, 'edit'])->name('edit.ca
 Route::post('/update_cauhoi', [controlleradmin::class, 'update'])->name('updatecauhoi');
 Route::get('/delete_cauhoi/{id}', [controlleradmin::class, 'delete'])->name('delete.cauhoi');
 
+Route::get('/adminthongke', [controlleradmin::class, 'thongke'])->name('adminthongke');
+
 
 Route::get('/admin/danhsachnguoidung', [controlleradmin::class, 'hienThiDanhSachNguoiDung'])->name('hienthi.nguoidung');
 

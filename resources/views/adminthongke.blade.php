@@ -8,12 +8,15 @@
     <meta name="author" content="" />
     <title></title>
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('css/bar.css') }}">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/app.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
 </head>
 
 <body class="sb-nav-fixed">
@@ -54,7 +57,7 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">Điều hướng</div>
-                        <a class="nav-link" href="{{ route('admin') }}">
+                        <a class="nav-link" href="admin">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Câu hỏi ôn tập
                         </a>
@@ -66,7 +69,7 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Bài viết
                         </a>
-                        <a class="nav-link" href="{{ route('adminthongke') }}">
+                        <a class="nav-link" href="#">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Thống kê
                         </a>
@@ -84,25 +87,61 @@
         </div>
         <div id="layoutSidenav_content">
             <main>
+                <div class="container mt-4">
+                    <h1>User Statistics</h1>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Ảnh User</th>
+                                <th>Tên User</th>
+                                <th>Phiên Làm Bài</th>
+                                <th>Thời Gian Bắt Đầu</th>
+                                <th>Thời Gian Kết Thúc</th>
+                                <th>Điểm Số</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($phienKetQuas as $phienKetQua)
+                                <tr>
+                                    <td><img src="{{ $phienKetQua->avatar }}" alt="Avatar" class="rounded-circle"
+                                            width="50"></td>
+                                    <td>{{ $phienKetQua->name }}</td>
+                                    <td>{{ $phienKetQua->IDPhien }}</td>
+                                    <td>{{ $phienKetQua->NgayGioBatDau }}</td>
+                                    <td>{{ $phienKetQua->NgayGioKetThuc }}</td>
+                                    @php
+                                        // Giả sử $diem là giá trị của thuộc tính điểm
+                                        $diem = $phienKetQua->Diem; // Ví dụ
 
-                <h1 class="mt-4">Danh sách Chủ Đề</h1>
-                <div class="w3-row-padding w3-center w3-margin-top" id="id0101">
-                    @foreach ($chuDeChinhs as $chuDeChinh)
-                        <div class="w3-third">
-                            <div class="w3-card w3-container" style="min-height:460px">
-                                <h3>{{ $chuDeChinh->TenChuDe }}</h3><br>
-                                <img class="mx-auto"
-                                    src="https://img.freepik.com/premium-vector/online-exam-checklist-pencil-computer-monitor_153097-220.jpg?w=360"
-                                    style="width:240px; height: 200px;">
-                                @foreach ($chuDeChinh->chudes as $chuDe)
-                                    <a href="{{ route('admincauhoi', ['id' => $chuDe->IDChuDe]) }}">
-                                        <p>{{ $chuDe->TenChuDe }}</p>
-                                    </a>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endforeach
+                                        // Tách chuỗi $diem thành mảng sử dụng dấu '/'
+                                        $diemParts = explode('/', $diem);
 
+                                        // Kiểm tra nếu mảng $diemParts có đúng 2 phần tử
+                                        if (count($diemParts) == 2) {
+                                            // Lấy số câu trả lời đúng và tổng số câu hỏi
+                                            $soCauDung = $diemParts[0];
+                                            $tongSoCau = $diemParts[1];
+                                        } else {
+                                            // Nếu không đủ phần tử, gán giá trị mặc định
+                                            $soCauDung = 0;
+                                            $tongSoCau = 0;
+                                        }
+                                    @endphp
+                                    <td>
+                                        @if ($tongSoCau > 0)
+                                            <h5 class="m-b-30 f-w-700">{{ $phienKetQua->Diem }}<span
+                                                    class="text-c-green m-l-10">--{{ ($soCauDung / $tongSoCau) * 100 }}%--</span></h5>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-c-red" style="width:{{ ($soCauDung / $tongSoCau) * 100 }}%"></div>
+                                            </div>
+                                        @else
+                                            Không có dữ liệu
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">

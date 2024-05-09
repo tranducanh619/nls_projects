@@ -7,7 +7,11 @@ use App\Models\ChuDe;
 use App\Models\CauHoi;
 use App\Models\DapAn;
 use App\Models\ChuDeChinh;
+use App\Models\KetQua;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 class controlleradmin extends Controller
 {
     //
@@ -141,4 +145,30 @@ class controlleradmin extends Controller
     // Trả về view với dữ liệu người dùng
     return view('danhsachnguoidung', ['nguoiDungs' => $nguoiDungs]);
 }
+
+    public function thongkeadmin()
+    {
+        // Lấy ID của người dùng đã đăng nhập
+        $userId = Auth::id();
+
+        // Lấy danh sách các phiên của người dùng
+        $phienKetQuas = KetQua::whereHas('phien', function ($query) use ($userId) {
+            $query->where('IDNguoiDung', $userId);
+        })->get();
+
+        $user = User::Find('id', $userId)->get();
+
+        return view('/', compact('phienKetQuas', 'user'));
+    }
+
+    public function thongke()
+    {
+        // Lấy ID của người dùng đã đăng nhập
+        $phienKetQuas = DB::table('phien')
+        ->leftJoin('users', 'users.id', '=', 'phien.IDNguoiDung')
+        ->leftJoin('ketqua', 'phien.IDPhien', '=', 'ketqua.IDPhien')
+        ->get();
+        return view('/adminthongke', compact('phienKetQuas'));
+    }
+
 }

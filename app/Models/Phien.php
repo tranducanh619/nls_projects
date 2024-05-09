@@ -13,7 +13,7 @@ class Phien extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'IDNguoiDung', 'NgayGioBatDau', 'NgayGioKetThuc'
+        'IDPhien','IDNguoiDung', 'NgayGioBatDau', 'NgayGioKetThuc'
     ];
 
     protected $casts = [

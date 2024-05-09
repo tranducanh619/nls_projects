@@ -35,30 +35,34 @@ class LoginGoogleController extends Controller
             return redirect()->route('login')->with('error', 'Đã xảy ra lỗi khi đăng nhập bằng Google.');
         }
 
-        $userr = User::where('google_id', $googleUser->id)->first();
-        // Kiểm tra role của người dùng
-        if (strpos($googleUser->email, '@hvnh.edu.vn') !== false) {
-            // Lưu thông tin người dùng vào cơ sở dữ liệu
-            $user = User::firstOrCreate(
-                ['google_id' => $googleUser->id],
-                ['name' => $googleUser->name, 'avatar' => $googleUser->avatar, 'email' => $googleUser->email, 'role' => 'sinhvien']
-            );
-            // Cập nhật thông tin đăng nhập đầu tiên nếu cần
-            if (!$user->created_at) {
-                $user->created_at = now();
-                $user->save();
+        $user = User::where('google_id', $googleUser->id)->first();
+        if ($user->role == 'admin') {
+            // Đăng nhập người dùng vào trang admin
+            Auth::login($user);
+            return redirect()->route('admin');
+        }else {
+            if (strpos($googleUser->email, '@hvnh.edu.vn') !== false || $user->role === 'sinhvien') {
+                // Lưu thông tin người dùng vào cơ sở dữ liệu
+                $user = User::firstOrCreate(
+                    ['google_id' => $googleUser->id],
+                    ['name' => $googleUser->name, 'avatar' => $googleUser->avatar, 'email' => $googleUser->email, 'role' => 'sinhvien']
+                );
+                // Cập nhật thông tin đăng nhập đầu tiên nếu cần
+                if (!$user->created_at) {
+                    $user->created_at = now();
+                    $user->save();
+                }
+                
+            } 
+            else {
+                // Nếu định dạng email không hợp lệ
+                return redirect()->route('login')->with('error', 'Tài khoản email không hợp lệ.');
             }
-            if ($userr->role == 'admin') {
-                // Đăng nhập người dùng vào trang admin
-                Auth::login($user);
-                return redirect()->route('admin');
-            }
-        } else {
-            // Nếu định dạng email không hợp lệ
-            return redirect()->route('login')->with('error', 'Tài khoản email không hợp lệ.');
+            // Đăng nhập người dùng vào trang chủ
+            Auth::login($user);
+            return redirect()->route('trangchu'); // Thay 'trangchu' bằng route của trang chủ
         }
-        // Đăng nhập người dùng vào trang chủ
-        Auth::login($user);
-        return redirect()->route('trangchu'); // Thay 'trangchu' bằng route của trang chủ
+        // Kiểm tra role của người dùng
+        
     }
 }
