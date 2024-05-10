@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\BaiViet;
 use App\Models\ChuDeBaiViet; // Import model BaiViet
 use Illuminate\Support\Facades\Auth;
+use App\Models\Like;
+
 class BaiVietController extends Controller
 {
     //
@@ -31,7 +33,8 @@ class BaiVietController extends Controller
         ]);
         $baiViet = BaiViet::all();
         $chude = ChuDeBaiViet::all();
-        return view('diendan', ['chude' => $chude, 'baiviet'=>$baiViet]);
+        $nguoiDung = Auth::user();
+        return view('diendan', ['chude' => $chude, 'baiviet'=>$baiViet, 'nguoidung' => $nguoiDung]);
         
     }
     public function hienThiForm()
@@ -88,6 +91,31 @@ class BaiVietController extends Controller
 
         // Chuyển hướng người dùng về trang nào đó sau khi xóa thành công
         return redirect()->route('diendan')->with('success', 'Xóa bài viết thành công');
+    }
+
+    public function likePost($id)
+    {
+        
+
+        // Kiểm tra xem bài viết đã được like chưa
+        $alreadyLiked = Like::where('IDBaiViet', $id)
+                            ->where('IDNguoiDung', auth()->id()) // Giả sử bạn có hệ thống xác thực người dùng
+                            ->exists();
+
+        if (!$alreadyLiked) {
+            // Nếu chưa like, thêm một like mới
+            $like = new Like();
+            $like->IDBaiViet = $id;
+            $like->IDNguoiDung = auth()->id(); // Giả sử bạn có hệ thống xác thực người dùng
+            $like->save();
+
+            // Cập nhật số lượt like của bài viết
+            $post = BaiViet::findOrFail($id);
+            $post->SoLuotLike += 1;
+            $post->save();
+        }
+        // Trả về số lượt like mới của bài viết
+        return redirect()->route('diendan')->with('success', 'like thành công');
     }
 
 }

@@ -5,42 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Like extends Model
-{
-    protected $table = 'likes';
-    protected $primaryKey = 'IDLike';
-    public $timestamps = false;
-
-    public function baiViet()
-    {
-        return $this->belongsTo('App\Models\BaiViet', 'IDBaiViet');
-    }
-
-    public function nguoiDung()
-    {
-        return $this->belongsTo('App\Models\NguoiDung', 'IDNguoiDung');
-    }
-
-    public function binhLuan()
-    {
-        return $this->belongsTo('App\Models\BinhLuan', 'IDBinhLuan');
-    }
-}
-
-class File extends Model
-{
-    protected $table = 'file';
-    protected $primaryKey = 'IDFile';
-    public $timestamps = false;
-
-    public function baiViet()
-    {
-        return $this->belongsTo('App\Models\BaiViet', 'IDBaiViet');
-    }
-}
-
 class BaiViet extends Model
 {
+    use HasFactory;
     protected $table = 'baiviet';
     protected $primaryKey = 'IDBaiViet';
     public $timestamps = false;
@@ -49,43 +16,26 @@ class BaiViet extends Model
     ];
     public function nguoiDung()
     {
-        return $this->belongsTo('App\Models\NguoiDung', 'IDNguoiDung');
+        return $this->belongsTo(User::class, 'IDNguoiDung');
     }
 
     public function chuDe()
     {
-        return $this->belongsTo('App\Models\ChuDe', 'IDChuDe');
+        return $this->belongsTo(ChuDeBaiViet::class, 'IDChuDe');
     }
 
     public function likes()
     {
-        return $this->hasMany('App\Models\Like', 'IDBaiViet');
+        return $this->hasMany(Like::class, 'IDBaiViet');
     }
 
     public function binhLuans()
     {
-        return $this->hasMany('App\Models\BinhLuan', 'IDBaiViet');
+        return $this->hasMany(BinhLuan::class, 'IDBaiViet');
     }
 
     public function files()
     {
-        return $this->hasMany('App\Models\File', 'IDBaiViet');
-    }
-}
-
-class BinhLuan extends Model
-{
-    protected $table = 'binhluan';
-    protected $primaryKey = 'IDBinhLuan';
-    public $timestamps = false;
-
-    public function baiViet()
-    {
-        return $this->belongsTo('App\Models\BaiViet', 'IDBaiViet');
-    }
-
-    public function nguoiDung()
-    {
-        return $this->belongsTo('App\Models\NguoiDung', 'IDNguoiDung');
+        return $this->hasMany(File::class, 'IDBaiViet');
     }
 }

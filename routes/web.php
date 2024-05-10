@@ -58,3 +58,4 @@ Route::get('/diendan000', function () {
     return view('diendan000');
 })->name('diendan000');
 
+Route::get('/diendan/{id}', [BaiVietController::class, 'likePost'])->name('like.post');
